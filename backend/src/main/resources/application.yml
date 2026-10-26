@@ -1,0 +1,18 @@
+server.port: 8080
+spring.data.mongodb.uri: ${MONGO_URI:mongodb://localhost:27017/genz}
+spring.jackson.default-property-inclusion: always
+genz:
+  jwt-secret: ${JWT_SECRET:change-this-secret-change-this-secret-123456}
+  dev-otp: ${DEV_OTP:true}            # true = OTP is returned in the API response (no SMS provider wired). Set false in production.
+  device-key: ${DEVICE_KEY:esp32-demo-key}
+  python-url: ${PYTHON_URL:http://localhost:8000}
+  gemini-key: ${GEMINI_API_KEY:}
+  gemini-model: ${GEMINI_MODEL:gemini-2.0-flash}
+  simulator:
+    enabled: ${SIMULATOR:true}         # simulated charger telemetry for demos
+    time-scale: ${TIME_SCALE:20}       # 20 = one real second counts as 20 simulated seconds
+  cors-origin: ${CORS_ORIGIN:http://localhost:5173,http://localhost:3000}
+  seed: ${SEED:true}
+  welcome-balance: ${WELCOME_BALANCE:500}
+  hold-seconds: ${HOLD_SECONDS:300}
+  reservation-minutes: ${RESERVATION_MINUTES:15}

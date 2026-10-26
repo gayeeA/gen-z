@@ -1,0 +1,25 @@
+services:
+  mongo:
+    image: mongo:7
+    volumes: [mongo-data:/data/db]
+    ports: ["27017:27017"]
+  optimizer:
+    build: ./optimizer
+    ports: ["8000:8000"]
+  backend:
+    build: ./backend
+    environment:
+      MONGO_URI: mongodb://mongo:27017/genz
+      PYTHON_URL: http://optimizer:8000
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      JWT_SECRET: ${JWT_SECRET:-change-this-secret-change-this-secret-123456}
+      DEVICE_KEY: ${DEVICE_KEY:-esp32-demo-key}
+      DEV_OTP: ${DEV_OTP:-true}
+    depends_on: [mongo, optimizer]
+    ports: ["8080:8080"]
+  frontend:
+    build: ./frontend
+    depends_on: [backend]
+    ports: ["3000:80"]
+volumes:
+  mongo-data:
